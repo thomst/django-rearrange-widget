@@ -1,0 +1,13 @@
+.drag-handle {
+    display: inline;
+    cursor: grab;
+    font-size: 180%;
+}
+
+.on-drag {
+    opacity: 50%;
+}
+
+.on-drag-over {
+    border-bottom: 3px solid firebrick;
+}
