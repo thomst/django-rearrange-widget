@@ -1,0 +1,12 @@
+/.coverage
+/.coveralls.yml
+/.python-version
+/*.sh
+/django_simple_page.egg-info/
+/build/
+/dist/
+/.tox/
+/.vscode/
+db.sqlite3*
+my.cnf
+__pycache__/
