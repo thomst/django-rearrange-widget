@@ -1,2 +1,4 @@
 {% include "django/forms/widgets/input.html" %}
-<div title="move item up and down" class="drag-handle">⇅</div>
+{% if widget.value %}
+    <div title="move item up and down" class="drag-handle">⇅</div>
+{% endif %}
