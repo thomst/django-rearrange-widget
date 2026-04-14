@@ -11,7 +11,7 @@
         }
 
         initRows() {
-            this.table.querySelectorAll('tr').forEach((row) => {
+            [].forEach.call(this.table.querySelectorAll('tr'), (row) => {
                 // Making the rows drop zones for the dragged row.
                 row.addEventListener("dragover", function (e) {
                     e.preventDefault();
@@ -35,7 +35,7 @@
 
         initDragHandle() {
             // Make the rows draggable by the widget's drag handle.
-            this.table.querySelectorAll('.drag-handle').forEach((handle) => {
+            [].forEach.call(this.table.querySelectorAll('.drag-handle'), (handle) => {
                 const row = handle.closest('tr');
                 handle.addEventListener("mousedown", function (e) {
                     row.setAttribute('draggable', 'true');
