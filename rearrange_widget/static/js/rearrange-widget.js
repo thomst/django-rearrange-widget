@@ -6,6 +6,7 @@
         constructor (table) {
             this.table = table;
             this.initRows();
+            this.initHeaderAsDragOverAndDropZone();
             this.initFormSubmission();
         }
 
@@ -71,6 +72,22 @@
             row.addEventListener("dragend", function (e) {
                 row.classList.remove("on-drag");
                 row.setAttribute('draggable', 'false');
+            });
+        }
+
+        initHeaderAsDragOverAndDropZone() {
+            const row = this.table.querySelector('thead > tr');
+            this.initRowAsDragOver(row);
+            row.addEventListener("dragover", function (e) {
+                e.preventDefault();
+            });
+            const querySelector = this.table.querySelector.bind(this.table);
+            row.addEventListener("drop", function (e) {
+                e.preventDefault();
+                const inputID = e.dataTransfer.getData("text");
+                const draggedRow = document.getElementById(inputID).closest('tr');
+                const firstRow = querySelector('tbody > tr');
+                firstRow.before(draggedRow);
             });
         }
 
