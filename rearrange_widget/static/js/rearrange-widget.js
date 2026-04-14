@@ -19,18 +19,16 @@
                     e.preventDefault();
                 });
                 row.addEventListener("dragenter", function (e) {
-                    e.target.closest('tr').classList.add('on-drag-over');
+                    row.classList.add('on-drag-over');
                 });
                 row.addEventListener("dragleave", function (e) {
-                    e.target.closest('tr').classList.remove('on-drag-over');
+                    row.classList.remove('on-drag-over');
                 });
                 row.addEventListener("drop", function (e) {
                     e.preventDefault();
-                    e.target.closest('tr').classList.remove('on-drag-over');
+                    row.classList.remove('on-drag-over');
                     const rowId = e.dataTransfer.getData("text");
-                    const movedRow = document.getElementById(rowId);
-                    const targetRow = e.target.closest('tr');
-                    targetRow.after(movedRow);
+                    row.after(document.getElementById(rowId));
                 });
             });
         }
