@@ -4,14 +4,16 @@
     class RearrangeAbleTable {
 
         constructor (table) {
-            this.tbody = table.querySelector('tbody');
+            this.table = table;
+            this.rows = table.querySelectorAll('tr.has_original');
+            this.form = table.closest('form');
             this.initRowsAsDropZone();
             this.initRowsAsDraggable();
             this.initFormWithSubmitHandler();
         }
 
         initRowsAsDropZone() {
-            [].forEach.call(this.tbody.querySelectorAll('tr'), (row) => {
+            [].forEach.call(this.rows, (row) => {
                 // Making the rows drop zones for the dragged row.
                 row.addEventListener("dragover", function (e) {
                     e.preventDefault();
@@ -35,7 +37,7 @@
 
         initRowsAsDraggable() {
             // Make the rows draggable by the widget's drag handle.
-            [].forEach.call(this.tbody.querySelectorAll('tr'), (row) => {
+            [].forEach.call(this.rows, (row) => {
                 const handle = row.querySelector('.drag-handle');
                 handle.addEventListener("mousedown", function (e) {
                     row.setAttribute('draggable', 'true');
@@ -56,10 +58,13 @@
         }
 
         initFormWithSubmitHandler() {
-            const form = this.tbody.closest('form');
-            const inputs = this.tbody.querySelectorAll('.rearrange-widget-index');
-            form.addEventListener("submit", function (e) {
-                [].forEach.call(inputs, (input, index) => { input.value = index; });
+            const table = this.table;
+            this.form.addEventListener("submit", function (e) {
+                // Query the rows anew to have their current order.
+                const rows = table.querySelectorAll('tr.has_original');
+                [].forEach.call(rows, (row, index) => {
+                    row.querySelector('.rearrange-widget-index').value = index;
+                });
             });
         }
     }
