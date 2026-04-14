@@ -17,6 +17,6 @@ class RearrangeWidget(NumberInput):
         # base class would hide the whole table cell, not only the input.
         attrs = super().build_attrs(base_attrs, extra_attrs)
         css_classes = attrs['class'].split(' ') if attrs.get('class') else []
-        css_classes.append('hidden')
+        css_classes += ['hidden', 'rearrange-widget-index']
         attrs['class'] = ' '.join(css_classes)
         return attrs
