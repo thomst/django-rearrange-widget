@@ -7,7 +7,3 @@
 .on-drag {
     opacity: 50%;
 }
-
-.on-drag-over {
-    border-bottom: 3px solid firebrick;
-}

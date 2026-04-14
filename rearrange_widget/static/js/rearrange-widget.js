@@ -5,6 +5,8 @@
 
         constructor (table) {
             this.table = table;
+            const style = window.getComputedStyle(table.querySelector('tbody > tr'))
+            this.rowHeight = style.getPropertyValue('height');
             this.initRows();
             this.initHeaderAsDragOverAndDropZone();
             this.initFormSubmission();
@@ -30,18 +32,28 @@
 
         initRowAsDragOver(row) {
             var counter = 0
+            const addDragOverStyle = this.addDragOverStyle.bind(this);
+            const removeDragOverStyle = this.removeDragOverStyle.bind(this);
             row.addEventListener("dragenter", function (e) {
                 counter++;
-                row.classList.add('on-drag-over');
+                addDragOverStyle(row);
             });
             row.addEventListener("dragleave", function (e) {
                 counter--;
-                if (counter == 0) row.classList.remove('on-drag-over');
+                if (counter == 0) removeDragOverStyle(row);
             });
             row.addEventListener("drop", function (e) {
                 counter = 0;
-                row.classList.remove('on-drag-over');
+                removeDragOverStyle(row);
             });
+        }
+
+        addDragOverStyle(row) {
+            row.style.borderBottom = `${this.rowHeight} solid var(--selected-bg)`;
+        }
+
+        removeDragOverStyle(row) {
+            row.style.borderBottom = 0;
         }
 
         initRowAsDropZone(row) {
