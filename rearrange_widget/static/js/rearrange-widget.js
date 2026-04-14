@@ -39,6 +39,7 @@
             });
             row.addEventListener("drop", function (e) {
                 counter = 0;
+                row.classList.remove('on-drag-over');
             });
         }
 
@@ -48,7 +49,6 @@
             });
             row.addEventListener("drop", function (e) {
                 e.preventDefault();
-                row.classList.remove('on-drag-over');
                 const inputID = e.dataTransfer.getData("text");
                 const draggedRow = document.getElementById(inputID).closest('tr');
                 row.after(draggedRow);
