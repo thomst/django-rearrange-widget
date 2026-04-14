@@ -37,6 +37,9 @@
                 counter--;
                 if (counter == 0) row.classList.remove('on-drag-over');
             });
+            row.addEventListener("drop", function (e) {
+                counter = 0;
+            });
         }
 
         initRowAsDropZone(row) {
