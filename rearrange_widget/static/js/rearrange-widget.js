@@ -5,65 +5,77 @@
 
         constructor (table) {
             this.table = table;
-            this.rows = table.querySelectorAll('tr.has_original');
-            this.form = table.closest('form');
-            this.initRowsAsDropZone();
-            this.initRowsAsDraggable();
-            this.initFormWithSubmitHandler();
+            this.initRows();
+            this.initFormSubmission();
         }
 
-        initRowsAsDropZone() {
-            // Making the rows drop zones for the dragged row.
-            [].forEach.call(this.rows, (row) => {
-                var counter = 0
-                row.addEventListener("dragenter", function (e) {
-                    counter++;
-                    row.classList.add('on-drag-over');
-                });
-                row.addEventListener("dragleave", function (e) {
-                    counter--;
-                    if (counter == 0) row.classList.remove('on-drag-over');
-                });
-                row.addEventListener("dragover", function (e) {
-                    e.preventDefault();
-                });
-                row.addEventListener("drop", function (e) {
-                    e.preventDefault();
-                    row.classList.remove('on-drag-over');
-                    const rowId = e.dataTransfer.getData("text");
-                    row.after(document.getElementById(rowId));
-                });
+        getRows() {
+            var selector;
+            if (this.table.id == 'result_list') {
+                selector = 'tbody > tr';
+            } else {
+                selector = 'tbody > tr.has_original'
+            }
+            return this.table.querySelectorAll(selector);
+        }
+
+        initRows() {
+            [].forEach.call(this.getRows(), (row) => {
+                this.initRowAsDragOver(row);
+                this.initRowAsDropZone(row);
+                this.initRowAsDraggable(row);
             });
         }
 
-        initRowsAsDraggable() {
-            // Make the rows draggable by the widget's drag handle.
-            [].forEach.call(this.rows, (row) => {
-                const handle = row.querySelector('.drag-handle');
-                handle.addEventListener("mousedown", function (e) {
-                    row.setAttribute('draggable', 'true');
-                });
-                handle.addEventListener("mouseup", function(e) {
-                    row.setAttribute('draggable', 'false');
-                });
-                row.addEventListener("dragstart", function (e) {
-                    row.classList.add("on-drag");
-                    e.dataTransfer.setData("text", row.id);
-                });
-                row.addEventListener("dragend", function (e) {
-                    row.classList.remove("on-drag");
-                    row.setAttribute('draggable', 'false');
-                });
+        initRowAsDragOver(row) {
+            var counter = 0
+            row.addEventListener("dragenter", function (e) {
+                counter++;
+                row.classList.add('on-drag-over');
             });
-
+            row.addEventListener("dragleave", function (e) {
+                counter--;
+                if (counter == 0) row.classList.remove('on-drag-over');
+            });
         }
 
-        initFormWithSubmitHandler() {
-            const table = this.table;
-            this.form.addEventListener("submit", function (e) {
-                // Query the rows anew to have their current order.
-                const rows = table.querySelectorAll('tr.has_original');
-                [].forEach.call(rows, (row, index) => {
+        initRowAsDropZone(row) {
+            row.addEventListener("dragover", function (e) {
+                e.preventDefault();
+            });
+            row.addEventListener("drop", function (e) {
+                e.preventDefault();
+                row.classList.remove('on-drag-over');
+                const inputID = e.dataTransfer.getData("text");
+                const draggedRow = document.getElementById(inputID).closest('tr');
+                row.after(draggedRow);
+            });
+        }
+
+        initRowAsDraggable(row) {
+            const handle = row.querySelector('.drag-handle');
+            handle.addEventListener("mousedown", function (e) {
+                row.setAttribute('draggable', 'true');
+            });
+            handle.addEventListener("mouseup", function(e) {
+                row.setAttribute('draggable', 'false');
+            });
+            row.addEventListener("dragstart", function (e) {
+                row.classList.add("on-drag");
+                const inputID = row.querySelector('input.rearrange-widget-index').id;
+                e.dataTransfer.setData("text", inputID);
+            });
+            row.addEventListener("dragend", function (e) {
+                row.classList.remove("on-drag");
+                row.setAttribute('draggable', 'false');
+            });
+        }
+
+        initFormSubmission() {
+            const form = this.table.closest('form');
+            const getRows = this.getRows.bind(this);
+            form.addEventListener("submit", function (e) {
+                [].forEach.call(getRows(), (row, index) => {
                     row.querySelector('.rearrange-widget-index').value = index;
                 });
             });
