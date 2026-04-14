@@ -13,16 +13,19 @@
         }
 
         initRowsAsDropZone() {
+            // Making the rows drop zones for the dragged row.
             [].forEach.call(this.rows, (row) => {
-                // Making the rows drop zones for the dragged row.
-                row.addEventListener("dragover", function (e) {
-                    e.preventDefault();
-                });
+                var counter = 0
                 row.addEventListener("dragenter", function (e) {
+                    counter++;
                     row.classList.add('on-drag-over');
                 });
                 row.addEventListener("dragleave", function (e) {
-                    row.classList.remove('on-drag-over');
+                    counter--;
+                    if (counter == 0) row.classList.remove('on-drag-over');
+                });
+                row.addEventListener("dragover", function (e) {
+                    e.preventDefault();
                 });
                 row.addEventListener("drop", function (e) {
                     e.preventDefault();
