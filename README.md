@@ -8,30 +8,85 @@
 
 ## Description
 
-Easily reorder the order of items in the django admin backend. Use this widget
-with an index field of your model and easily reorder the order of items within
-listings like the changelist or inline formsets.
+Reorder your items by simply dragging them to their new position. This works
+fine within django admin's changelists or inline model forms.
+
+All you need to do is to use an editable index field with the famous
+`ReorderItemsWidget` of this app.
 
 
-## Setup
+## Installation
 
 Install via pip:
 ```
 pip install django-reorder-items-widget
 ```
 
+## Setup
+
 Add `reorder_items_widget` to your `INSTALLED_APPS`:
 ```
 INSTALLED_APPS = [
-   'reorder_items_widget',
-   ...
+    'reorder_items_widget',
+    ...
 ]
 ```
 
-## Getting started
+Add a index field to your model:
+```
+class Item(models.Model):
+    index = models.PositiveSmallIntegerField()
+    ...
+    class Meta:
+        ordering = ('index',)
+```
 
-TODO
+Using the ReorderItemsWidget with your index field only makes sense in result
+lists or inline modeladmin forms. A simple way to put the widget in place is a
+custom model form:
+```
+class ItemModelFormForLists(forms.ModelForm):
+    class Meta:
+        widgets={'index': ReorderItemsWidget()}
+```
 
-## Usage
+Now you can use this form with your changelist by overwriting the
+`get_changelist_form` method of your model admin:
+```
+class BaseItemAdmin(admin.ModelAdmin):
+    list_editable = ("index",)
+    list_display = ("index", ...)
 
-TODO
+    def get_changelist_form(self, request, **kwargs):
+        kwargs.setdefault('form', ItemForm)
+        return super().get_changelist_form(request, **kwargs)
+```
+
+**_NOTE:_** Mind that your index field must be editable.
+
+To use the widget with your inline modeladmin simple at your form to the
+`TabularInline` inline class:
+```
+class BaseItemInline(admin.TabularInline):
+    form = ItemForm
+    fields = ("index", ...)
+    ...
+```
+
+That's it.
+
+## Caveats
+
+The widget will always number your items sequentially. Reordering items in a
+filtered list might be have unexpected results. Paging however should not be a
+problem since indexes are updated using the lowest one as base.
+
+## General considerations on switching index values
+
+There is a general problem with switching values on a unique index field: In
+mysql like databases you will run into a constraint violation - even if you
+update all items in a single update transaction.
+
+To work around this you can either obmit the unique constraint. Or implement a
+complex saving logic like saving changed indexes as negative values first and
+update them to their positiv counterpart afterwards.
