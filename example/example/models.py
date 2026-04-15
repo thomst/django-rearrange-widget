@@ -8,17 +8,26 @@ class Container(models.Model):
     name = models.CharField('Name', max_length=255)
 
 
-class Item(models.Model):
+class BaseItem(models.Model):
     """
-    Simple item with an index for ordering.
+    Base for simple item models with an index for ordering.
     """
     name = models.CharField('Name', max_length=255)
     index = models.PositiveSmallIntegerField()
-    container = models.ForeignKey(
-        Container,
-        related_name='items',
-        on_delete=models.CASCADE
-        )
+    container = models.ForeignKey(Container, on_delete=models.CASCADE)
 
     class Meta:
+        abstract = True
         ordering = ('container', 'index')
+
+
+class Item(BaseItem):
+    """
+    Simple item with an index for ordering.
+    """
+
+
+class AnotherItem(BaseItem):
+    """
+    Another simple item with an index for ordering.
+    """
