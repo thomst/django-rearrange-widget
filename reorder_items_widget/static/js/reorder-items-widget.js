@@ -37,8 +37,14 @@
             const that = this;
             row.addEventListener("dragenter", function (e) {
                 counter++;
-                if (!row.draggable && !(row.nextElementSibling && row.nextElementSibling.draggable))
-                    that.addDragOverStyle(row);
+                // The hovering row is not itself or the one above - which also
+                // could be the header.
+                const firstRow = that.table.querySelector('tbody > tr');
+                if (
+                    !row.draggable &&
+                    !(row.nextElementSibling && row.nextElementSibling.draggable) &&
+                    !(row.parentElement.nodeName == 'THEAD' && firstRow.draggable)
+                ) that.addDragOverStyle(row);
             });
             row.addEventListener("dragleave", function (e) {
                 counter--;
