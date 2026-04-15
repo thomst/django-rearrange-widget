@@ -63,7 +63,7 @@ jobs:
         pip install --editable ./
 
     - name: Run Tests
-      run: coverage run --source=generic_admin_actions/ tests/manage.py test testapp
+      run: coverage run --source=generic_admin_actions/ tests/manage.py test
 
     - name: Create coverage lcov file
       run: coverage lcov -o coverage.lcov
