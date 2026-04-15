@@ -1,12 +1,12 @@
 (function() {
     "use strict";
 
-    class RearrangeAbleTable {
+    class ReorderItemsTable {
 
         constructor (table) {
             this.table = table;
             this.form = table.closest('form');
-            this.baseIndex = Number(table.querySelector('.rearrange-widget-index').value);
+            this.baseIndex = Number(table.querySelector('.reorder-items-widget-index').value);
             const style = window.getComputedStyle(table.querySelector('tbody > tr'))
             this.rowHeight = style.getPropertyValue('height');
             this.initRows();
@@ -81,7 +81,7 @@
             });
             row.addEventListener("dragstart", function (e) {
                 row.classList.add("on-drag");
-                const inputID = row.querySelector('input.rearrange-widget-index').id;
+                const inputID = row.querySelector('input.reorder-items-widget-index').id;
                 e.dataTransfer.setData("text", inputID);
             });
             row.addEventListener("dragend", function (e) {
@@ -111,7 +111,7 @@
             this.form.addEventListener("submit", function (e) {
                 [].forEach.call(that.getRows(), (row, counter) => {
                     const index = that.baseIndex + counter;
-                    row.querySelector('.rearrange-widget-index').value = index;
+                    row.querySelector('.reorder-items-widget-index').value = index;
                 });
             });
         }
@@ -119,10 +119,10 @@
 
 
     document.addEventListener("DOMContentLoaded", function () {
-        // Init each table which uses the rearrange-widget.
+        // Init each table which uses the reorder-items-widget.
         document.querySelectorAll('table').forEach((el) => {
             if (el.querySelector('.drag-handle')) {
-                new RearrangeAbleTable(el);
+                new ReorderItemsTable(el);
             }
         });
     });

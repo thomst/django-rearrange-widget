@@ -1,10 +1,10 @@
 from django import forms
-from rearrange_widget.widgets import RearrangeWidget
+from reorder_items_widget.widgets import ReorderItemsWidget
 
 
 class ItemForm(forms.ModelForm):
     """
-    ModelForm for items using the rearrange-widget for the index field.
+    ModelForm for items using the reorder-items-widget for the index field.
     """
     class Meta:
-        widgets={'index': RearrangeWidget()}
+        widgets={'index': ReorderItemsWidget()}
