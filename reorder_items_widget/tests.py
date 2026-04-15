@@ -9,5 +9,21 @@ class WidgetTestCase(TestCase):
     def test_widget(self):
         widget = ReorderItemsWidget()
         css_classes = widget.build_attrs(dict(), dict())['class']
-        self.assertIn('hidden', css_classes)
         self.assertIn('reorder-items-widget-index', css_classes)
+
+    def test_rendering_with_value(self):
+        widget = ReorderItemsWidget()
+        html = widget.render('index', 1)
+        input = '<input type="number" name="index" value="1" class="reorder-items-widget-index hidden">'
+        drag_handle = '<div title="move item up and down" class="drag-handle">⇅</div>'
+        self.assertInHTML(input, html)
+        self.assertInHTML(drag_handle, html)
+
+    def test_rendering_without_value(self):
+        widget = ReorderItemsWidget()
+        html = widget.render('index', None)
+        print(html)
+        input = '<input type="number" name="index" class="reorder-items-widget-index">'
+        drag_handle = '<div title="move item up and down" class="drag-handle">⇅</div>'
+        self.assertInHTML(input, html)
+        self.assertNotIn(drag_handle, html)
