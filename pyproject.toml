@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "django-reorder-items-widget"
 authors = [{name = "Thomas Leichtfuß", email = "thomas.leichtfuss@posteo.de"}]
 description = "Easily reorder the order of items within the django admin backend."
-readme = "README.rst"
+readme = "README.md"
 requires-python = ">=3.8"
 keywords = ["django", "django-admin", "widgets"]
 license = { text = "BSD-3-Clause"}
