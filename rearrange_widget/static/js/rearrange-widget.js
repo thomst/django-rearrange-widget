@@ -5,6 +5,8 @@
 
         constructor (table) {
             this.table = table;
+            this.form = table.closest('form');
+            this.baseIndex = Number(table.querySelector('.rearrange-widget-index').value);
             const style = window.getComputedStyle(table.querySelector('tbody > tr'))
             this.rowHeight = style.getPropertyValue('height');
             this.initRows();
@@ -104,10 +106,10 @@
         }
 
         initFormSubmission() {
-            const form = this.table.closest('form');
-            const getRows = this.getRows.bind(this);
-            form.addEventListener("submit", function (e) {
-                [].forEach.call(getRows(), (row, index) => {
+            const that = this;
+            this.form.addEventListener("submit", function (e) {
+                [].forEach.call(that.getRows(), (row, counter) => {
+                    const index = that.baseIndex + counter;
                     row.querySelector('.rearrange-widget-index').value = index;
                 });
             });
