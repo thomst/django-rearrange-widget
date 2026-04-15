@@ -41,11 +41,11 @@ Repository = "https://github.com/thomst/django-reorder-items-widget"
 Documentation = "https://github.com/thomst/django-reorder-items-widget#readme"
 
 [tool.setuptools]
-packages = ["reorder_items_widget"]
+packages = ["reorder_items_widget", "reorder_items_widget.templatetags"]
 include-package-data = false
 
 [tool.setuptools.package-data]
-reorder_items_widget = ["templates/**"]
+reorder_items_widget = ["templates/**", "static/**"]
 
 [tool.setuptools.dynamic]
 version = {attr = "reorder_items_widget.__version__.__version__"}
