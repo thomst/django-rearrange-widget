@@ -1,4 +1,4 @@
-name: Publish django-generic-admin-actions to pypi
+name: Publish django-reorder-items-widget to pypi
 
 on:
   # Runs on pushing tags
