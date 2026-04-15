@@ -90,3 +90,8 @@ update all items in a single update transaction.
 To work around this you can either obmit the unique constraint. Or implement a
 complex saving logic like saving changed indexes as negative values first and
 update them to their positiv counterpart afterwards.
+
+## Contribute
+
+Feedback, feature requests, bug reports or pull requests are most welcome. Just
+use the common github infrastructure.
