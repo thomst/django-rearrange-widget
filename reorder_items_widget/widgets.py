@@ -13,10 +13,8 @@ class ReorderItemsWidget(NumberInput):
         js = ('js/reorder-items-widget.js',)
 
     def build_attrs(self, base_attrs, extra_attrs):
-        # We add hidden as css class to the widget. Since using a HiddenInput as
-        # base class would hide the whole table cell, not only the input.
         attrs = super().build_attrs(base_attrs, extra_attrs)
         css_classes = attrs['class'].split(' ') if attrs.get('class') else []
-        css_classes += ['hidden', 'reorder-items-widget-index']
+        css_classes += ['reorder-items-widget-index']
         attrs['class'] = ' '.join(css_classes)
         return attrs

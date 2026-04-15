@@ -1,4 +1,14 @@
-{% include "django/forms/widgets/input.html" %}
+{% load reorder_items_widget %}
+
+{% comment %}
+We only render the widget for existing items. Doing something smart with the
+index input for extra rows in inline model forms - like using a hidden input and
+set the index within a pre-save signal handler - is not our buisness.
+{% endcomment %}
+
 {% if widget.value %}
+    {% hide_widget %}
     <div title="move item up and down" class="drag-handle">⇅</div>
 {% endif %}
+
+{% include "django/forms/widgets/input.html" %}
