@@ -34,19 +34,20 @@
 
         initRowAsDragOver(row) {
             var counter = 0
-            const addDragOverStyle = this.addDragOverStyle.bind(this);
-            const removeDragOverStyle = this.removeDragOverStyle.bind(this);
+            const that = this;
             row.addEventListener("dragenter", function (e) {
                 counter++;
-                addDragOverStyle(row);
+                if (!row.draggable && !(row.nextElementSibling && row.nextElementSibling.draggable))
+                    that.addDragOverStyle(row);
             });
             row.addEventListener("dragleave", function (e) {
                 counter--;
-                if (counter == 0) removeDragOverStyle(row);
+                if (counter == 0)
+                    that.removeDragOverStyle(row);
             });
             row.addEventListener("drop", function (e) {
                 counter = 0;
-                removeDragOverStyle(row);
+                that.removeDragOverStyle(row);
             });
         }
 
