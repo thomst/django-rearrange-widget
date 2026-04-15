@@ -45,7 +45,7 @@ Using the ReorderItemsWidget with your index field only makes sense in result
 lists or inline modeladmin forms. A simple way to put the widget in place is a
 custom model form:
 ```
-class ItemModelFormForLists(forms.ModelForm):
+class ReorderItemForm(forms.ModelForm):
     class Meta:
         widgets={'index': ReorderItemsWidget()}
 ```
@@ -58,17 +58,17 @@ class BaseItemAdmin(admin.ModelAdmin):
     list_display = ("index", ...)
 
     def get_changelist_form(self, request, **kwargs):
-        kwargs.setdefault('form', ItemForm)
+        kwargs.setdefault('form', ReorderItemForm)
         return super().get_changelist_form(request, **kwargs)
 ```
 
 **_NOTE:_** Mind that your index field must be editable.
 
 To use the widget with your inline modeladmin simple at your form to the
-`TabularInline` inline class:
+`TabularInline` class:
 ```
-class BaseItemInline(admin.TabularInline):
-    form = ItemForm
+class ItemInline(admin.TabularInline):
+    form = ReorderItemForm
     fields = ("index", ...)
     ...
 ```
