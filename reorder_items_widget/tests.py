@@ -15,7 +15,7 @@ class WidgetTestCase(TestCase):
         widget = ReorderItemsWidget()
         html = widget.render('index', 1)
         input = '<input type="number" name="index" value="1" class="reorder-items-widget-index hidden">'
-        drag_handle = '<div title="Drag me!" class="drag-handle">⬍</div>'
+        drag_handle = '<div title="Drag me!" class="drag-handle">⇳</div>'
         self.assertInHTML(input, html)
         self.assertInHTML(drag_handle, html)
 
@@ -23,6 +23,6 @@ class WidgetTestCase(TestCase):
         widget = ReorderItemsWidget()
         html = widget.render('index', None)
         input = '<input type="number" name="index" class="reorder-items-widget-index">'
-        drag_handle = '<div title="Drag me!" class="drag-handle">⬍</div>'
+        drag_handle = '<div title="Drag me!" class="drag-handle">⇳</div>'
         self.assertInHTML(input, html)
         self.assertNotIn(drag_handle, html)
