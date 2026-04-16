@@ -77,19 +77,20 @@ That's it.
 
 ## Caveats
 
-The widget will always number your items sequentially. Reordering items in a
-filtered list might be have unexpected results. Paging however should not be a
-problem since indexes are updated using the lowest one as base.
+The widget will always number your items sequentially. So reordering a filtered
+list of items might have unexpected results. Paging however should not be an
+issue since indexes are updated using the index of the first list item as base.
 
 ## General considerations on switching index values
 
-There is a general problem with switching values on a unique index field: In
+There is a general issue with switching values on a unique index field: In
 mysql like databases you will run into a constraint violation - even if you
 update all items in a single update transaction.
 
 To work around this you can either obmit the unique constraint. Or implement a
-complex saving logic like saving changed indexes as negative values first and
-update them to their positiv counterpart afterwards.
+complex saving logic like using the negative counterparts of your indexes in a
+preceding update round and finally switch those values back to their positive
+equivalent.
 
 ## Contribute
 
