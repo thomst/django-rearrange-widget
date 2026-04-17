@@ -3,8 +3,10 @@ from django.forms import NumberInput
 
 class ReorderItemsWidget(NumberInput):
     """
-    A widget that allows to move items up and down within a listing with an
-    editable index field.
+    Makes a number field a reorder items widget. Means the original field will
+    be hidden and a drag handler will be displayed instead. Items in result
+    lists and inline formsets will be reorderable by dragging the rows to their
+    new position.
     """
     template_name = 'forms/widgets/reorder-items-widget.html'
 
