@@ -16,7 +16,7 @@ class ReorderItemsWidget(NumberInput):
 
     def build_attrs(self, base_attrs, extra_attrs):
         attrs = super().build_attrs(base_attrs, extra_attrs)
-        css_classes = attrs['class'].split(' ') if attrs.get('class') else []
-        css_classes += ['reorder-items-widget-index']
-        attrs['class'] = ' '.join(css_classes)
+        classes = attrs['class'].split(' ') if attrs.get('class') else []
+        classes += ['reorder-items-widget-index']
+        attrs['class'] = ' '.join(classes)
         return attrs
