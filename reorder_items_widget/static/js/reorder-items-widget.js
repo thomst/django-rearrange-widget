@@ -36,8 +36,8 @@
             var counter = 0
             const that = this;
             this.row.addEventListener("dragenter", function (e) {
-                if (!that.isDropZone()) return;
                 counter++;
+                if (!that.isDropZone()) return;
                 that.row.style.borderBottom = `${that.rowHeight} solid var(--selected-bg)`;
             });
             this.row.addEventListener("dragleave", function (e) {
